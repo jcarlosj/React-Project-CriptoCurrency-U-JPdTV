@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import styled from '@emotion/styled';
 
 const 
@@ -21,19 +21,31 @@ const
     `;
 
 /** Hook */
-const useCriptoCurrency = () => {
+const useCriptoCurrency = ( label, initialState, options ) => {
+
+    /** Define State */
+    const [ state, setState ] = useState( initialState );
 
     /** Interface que se mostrará (No siempre se muestra una) */
     const SelectCriptoCurrency = () => (          // Return Implicito
         <Fragment>
-            <Label>Elije tu cripto</Label>
-            <Select>
-                <option value="BTC">Bitcoin</option>
+            <Label>{ label }</Label>
+            <Select
+                onChange={ event => setState( event .target .value ) }      /** Actualiza el State */
+                value={ state }                                             /** Asigna Valor al Select */
+            >
+                <option value="">Seleccione...</option>
+                { options .map( option => (     // Return implicito
+                    <option 
+                        key={ option .prefix } 
+                        value={ option .prefix }
+                    >{ option .name }</option>
+                ))}
             </Select>
         </Fragment>
     );
 
-    return [ SelectCriptoCurrency ];     // Retorna Interfaz
+    return [ state, setState, SelectCriptoCurrency ];     // Retorna State del Hook e Interfaz
 }
 
 export default useCriptoCurrency;

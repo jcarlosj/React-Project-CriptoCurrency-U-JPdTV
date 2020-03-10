@@ -25,21 +25,31 @@ const
 const Form = () => {
 
     /** Define available currencies (Podria ser una consulta a un API) */
-    const CURRENCIES = [
-        { name: 'Peso Colombiano', prefix: 'COP' },
-        { name: 'Peso Mexicano', prefix: 'MXN' },
-        { name: 'Peso Argentino', prefix: 'ARS' },
-        { name: 'Bolivar Soberano', prefix: 'VES' },
-        { name: 'Dólar Americano', prefix: 'USD' },
-        { name: 'Dólar Canadiense', prefix: 'CAD' },
-        { name: 'Euro', prefix: 'EUR' },
-        { name: 'Libra Esterlina', prefix: 'GBP' }
-    ];
+    const 
+        CURRENCIES = [
+            { name: 'Peso Colombiano', prefix: 'COP' },
+            { name: 'Peso Mexicano', prefix: 'MXN' },
+            { name: 'Peso Argentino', prefix: 'ARS' },
+            { name: 'Bolivar Soberano', prefix: 'VES' },
+            { name: 'Dólar Americano', prefix: 'USD' },
+            { name: 'Dólar Canadiense', prefix: 'CAD' },
+            { name: 'Euro', prefix: 'EUR' },
+            { name: 'Libra Esterlina', prefix: 'GBP' }
+        ],
+        CRIPTO_CURRENCIES = [
+            { name: 'Bitcoin', prefix: 'BTC' },
+            { name: 'Ethereum', prefix: 'ETH' },
+            { name: 'Ripple', prefix: 'XRP' },
+            { name: 'Bitcoin Cash', prefix: 'BCH' },
+            { name: 'Litecoin', prefix: 'LTC' },
+            { name: 'Dash', prefix: 'DASH' },
+            { name: 'Cardano', prefix: 'ADA' }
+        ];
 
-    /** Implementacion del Hook personalizado */
+    /** Implementacion del Hooks personalizados */
     const 
         [ currency, setCurrency, SelectCurrency ] = useCurrency( 'Elije tu moneda', '', CURRENCIES ),      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)
-        [ SelectCriptoCurrency ] = useCriptoCurrency();      
+        [ criptoCurrency, setCriptoCurrency, SelectCriptoCurrency ] = useCriptoCurrency( 'Elije tu criptomoneda', '', CRIPTO_CURRENCIES );      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)     
 
     return (
         <form>
