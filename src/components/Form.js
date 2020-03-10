@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import useCurrency from '../hooks/useCurrency';         // Hook Personalizado
+import useCurrency from '../hooks/useCurrency';             // Hook Personalizado
+import useCriptoCurrency from '../hooks/useCriptoCurrency'; // Hook Personalizado
 
 const
     Button = styled .button `
@@ -36,11 +37,14 @@ const Form = () => {
     ];
 
     /** Implementacion del Hook personalizado */
-    const [ state, setState, SelectCurrency ] = useCurrency( 'Elije tu moneda', '', CURRENCIES );      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)
+    const 
+        [ currency, setCurrency, SelectCurrency ] = useCurrency( 'Elije tu moneda', '', CURRENCIES ),      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)
+        [ SelectCriptoCurrency ] = useCriptoCurrency();      
 
     return (
         <form>
             <SelectCurrency />
+            <SelectCriptoCurrency />
             <Button
                 type="button"
             >Calcular</Button>
