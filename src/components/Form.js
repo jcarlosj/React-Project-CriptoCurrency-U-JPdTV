@@ -23,8 +23,20 @@ const
 
 const Form = () => {
 
+    /** Define available currencies (Podria ser una consulta a un API) */
+    const CURRENCIES = [
+        { name: 'Peso Colombiano', prefix: 'COP' },
+        { name: 'Peso Mexicano', prefix: 'MXN' },
+        { name: 'Peso Argentino', prefix: 'ARS' },
+        { name: 'Bolivar Soberano', prefix: 'VES' },
+        { name: 'Dólar Americano', prefix: 'USD' },
+        { name: 'Dólar Canadiense', prefix: 'CAD' },
+        { name: 'Euro', prefix: 'EUR' },
+        { name: 'Libra Esterlina', prefix: 'GBP' }
+    ];
+
     /** Implementacion del Hook personalizado */
-    const [ state, setState, SelectCurrency ] = useCurrency();      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)
+    const [ state, setState, SelectCurrency ] = useCurrency( 'Elije tu moneda', '', CURRENCIES );      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)
 
     return (
         <form>

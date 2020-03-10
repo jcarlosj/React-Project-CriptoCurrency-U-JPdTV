@@ -1,16 +1,22 @@
 import React, { Fragment, useState } from 'react';
 
-const useCurrency = () => {
+const useCurrency = ( label, initialState, options ) => {
 
     /** Define State */
-    const [ state, setState ] = useState( '' );
+    const [ state, setState ] = useState( initialState );
 
     /** Interface que se mostrará (No siempre se muestra) */
     const SelectCurrency = () => (          // Return Implicito
         <Fragment>
             <label>Moneda</label>
             <select>
-                <option value="COP">Peso Colombiano</option>
+                <option value="">Seleccione...</option>
+                { options .map( option => (     // Return implicito
+                    <option 
+                        key={ option .prefix } 
+                        value={ option .prefix }
+                    >{ option .name }</option>
+                ))}
             </select>
         </Fragment>
     );
