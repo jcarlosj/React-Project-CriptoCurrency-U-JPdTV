@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Form from './components/Form';
 
 const 
   Heading = styled .h1 `
@@ -33,6 +34,7 @@ function App() {
     <Container>
       <div>
         <Heading>Consulta Criptos</Heading>
+        <Form />
       </div>
       <div>
         <Heading>Valor Cotización</Heading>
