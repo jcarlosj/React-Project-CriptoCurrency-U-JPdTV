@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
-import Form from './components/Form';
 
+import axios from 'axios';                  // Dependency
+import styled from '@emotion/styled';       // Dependency
+
+import Form from './components/Form';       // Component
+
+/** Define Style Components */
 const 
   Heading = styled .h1 `
     color: #000;
@@ -37,11 +41,27 @@ function App() {
     criptoCurrency: ''
   });
 
-  /** Seguimiento a Cambios */
+  /** Hook: Seguimiento a cambios */
   useEffect( () => {
-    /** Evita ejecucion la primera vez */
-    if( dataForm .currency === '' ) return;
-    console .log( 'Cotizando' );
+
+    /** Se recomienda usar funciones dentro de este Hook */
+    const quoteCryptoCurrencyValue = async () => {
+        
+      if( dataForm .currency === '' ) return;   // Evita ejecucion la primera vez 
+      
+      console .log( 'Cotizando...' );
+      
+      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${ dataForm .criptoCurrency }&tsyms=${ dataForm .currency }`,
+            response = await axios .get( url );
+      
+      console .group( 'quoteValue', response );
+      console .log( response .data .DISPLAY[ dataForm .criptoCurrency ][ dataForm .currency ] );    // Acceso Dinámico a el objeto de la API
+      console .groupEnd();
+
+    }
+    quoteCryptoCurrencyValue();
+
+    
   }, [ dataForm ] );
 
   return (
