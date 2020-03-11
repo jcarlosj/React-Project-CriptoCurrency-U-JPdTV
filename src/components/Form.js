@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
+
+import styled from '@emotion/styled';                       // Dependencia
+import axios from 'axios';                                  // Dependencia
+
 import useCurrency from '../hooks/useCurrency';             // Hook Personalizado
 import useCriptoCurrency from '../hooks/useCriptoCurrency'; // Hook Personalizado
 
-import axios from 'axios';
-
+/** Define Style Components */
 const
     Button = styled .button `
         background-color: #66A2FE;
@@ -42,6 +44,7 @@ const Form = () => {
     /** Define State */
     const 
         [ ApiData, setApiData ] = useState([]),
+        [ error, setError ] = useState( false ),
         /** Implementacion del Hooks personalizados */
         [ currency, setCurrency, SelectCurrency ] = useCurrency( 'Elije tu moneda', '', CURRENCIES ),      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)
         [ criptoCurrency, setCriptoCurrency, SelectCriptoCurrency ] = useCriptoCurrency( 'Elije tu criptomoneda', '', ApiData );      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)     
@@ -61,12 +64,32 @@ const Form = () => {
 
     }, [] );
 
+    /** Methods */
+    const submitQuoteCurrency = event => {
+        event .preventDefault();
+
+        /** Valida si los campos estan vacios */
+        if( currency === '' || criptoCurrency === '' ) {
+            setError( true );
+            return;
+        }
+        setError( false );
+
+        /** Pasar datos al componente padre */
+    }
+
     return (
-        <form>
+        <form
+            onSubmit={ submitQuoteCurrency }
+        >
+            { error
+                ?   <p>Todos los campos son requeridos</p>
+                :   null
+            }
             <SelectCurrency />
             <SelectCriptoCurrency />
             <Button
-                type="button"
+                type="submit"
             >Calcular</Button>
         </form>
     );
