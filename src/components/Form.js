@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import styled from '@emotion/styled';                       // Dependencia
 import axios from 'axios';                                  // Dependencia
+import styled from '@emotion/styled';                       // Dependencia
+import Error from './Error';                                // Style Component
 
 import useCurrency from '../hooks/useCurrency';             // Hook Personalizado
 import useCriptoCurrency from '../hooks/useCriptoCurrency'; // Hook Personalizado
@@ -83,7 +84,7 @@ const Form = () => {
             onSubmit={ submitQuoteCurrency }
         >
             { error
-                ?   <p>Todos los campos son requeridos</p>
+                ?   <Error message="Todos los campos son requeridos" />
                 :   null
             }
             <SelectCurrency />
