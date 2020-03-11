@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Form from './components/Form';
 
@@ -30,11 +30,20 @@ const
   `;
 
 function App() {
+
+  /** Define State */
+  const [ dataForm, setDataForm ] = useState({
+    currency: '',
+    criptoCurrency: ''
+  });
+
   return (
     <Container>
       <div>
         <Heading>Consulta Criptos</Heading>
-        <Form />
+        <Form
+          setDataForm={ setDataForm }
+        />
       </div>
       <div>
         <Heading>Valor Cotización</Heading>

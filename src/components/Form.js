@@ -27,7 +27,7 @@ const
         }
     `;
 
-const Form = () => {
+const Form = ({ setDataForm }) => {         // Destructuring Props
 
     /** Define available currencies (Podria ser una consulta a un API) */
     const 
@@ -77,6 +77,10 @@ const Form = () => {
         setError( false );
 
         /** Pasar datos al componente padre */
+        setDataForm({
+            currency,
+            criptoCurrency
+        });
     }
 
     return (
