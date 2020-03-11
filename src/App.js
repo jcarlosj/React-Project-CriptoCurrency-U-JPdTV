@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';                  // Dependency
-import styled from '@emotion/styled';       // Dependency
+/** Dependencies */
+import axios from 'axios';           
+import styled from '@emotion/styled';
 
-import Form from './components/Form';       // Component
+/** Components */
+import Form from './components/Form';          
+import Quotation from './components/Quotation';
 
 /** Define Style Components */
 const 
@@ -36,10 +39,11 @@ const
 function App() {
 
   /** Define State */
-  const [ dataForm, setDataForm ] = useState({
-    currency: '',
-    criptoCurrency: ''
-  });
+  const 
+    [ dataForm, setDataForm ] = useState({
+      currency: '',
+      criptoCurrency: ''
+    });
 
   /** Hook: Seguimiento a cambios */
   useEffect( () => {
@@ -74,6 +78,7 @@ function App() {
       </div>
       <div>
         <Heading>Valor Cotización</Heading>
+        <Quotation />
       </div>
     </Container>
   );
