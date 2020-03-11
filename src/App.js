@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Form from './components/Form';
 
@@ -36,6 +36,13 @@ function App() {
     currency: '',
     criptoCurrency: ''
   });
+
+  /** Seguimiento a Cambios */
+  useEffect( () => {
+    /** Evita ejecucion la primera vez */
+    if( dataForm .currency === '' ) return;
+    console .log( 'Cotizando' );
+  }, [ dataForm ] );
 
   return (
     <Container>
