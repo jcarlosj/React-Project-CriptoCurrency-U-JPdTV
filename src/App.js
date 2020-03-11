@@ -43,7 +43,8 @@ function App() {
     [ dataForm, setDataForm ] = useState({
       currency: '',
       criptoCurrency: ''
-    });
+    }),
+    [ quotedValue, setQuotedValue ] = useState({});   // Valor cotizado a traves del API
 
   /** Hook: Seguimiento a cambios */
   useEffect( () => {
@@ -58,9 +59,8 @@ function App() {
       const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${ dataForm .criptoCurrency }&tsyms=${ dataForm .currency }`,
             response = await axios .get( url );
       
-      console .group( 'quoteValue', response );
-      console .log( response .data .DISPLAY[ dataForm .criptoCurrency ][ dataForm .currency ] );    // Acceso Dinámico a el objeto de la API
-      console .groupEnd();
+      console .log( 'quoteValue', response );
+      setQuotedValue( response .data .DISPLAY[ dataForm .criptoCurrency ][ dataForm .currency ] );    // Asigna valor al State: Acceso Dinámico a el objeto de la API
 
     }
     quoteCryptoCurrencyValue();
@@ -78,7 +78,9 @@ function App() {
       </div>
       <div>
         <Heading>Valor Cotización</Heading>
-        <Quotation />
+        <Quotation 
+          quotedValue={ quotedValue }
+        />
       </div>
     </Container>
   );
