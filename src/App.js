@@ -77,7 +77,6 @@ function App() {
         />
       </div>
       <div>
-        <Heading>Valor Cotización</Heading>
         <Quotation 
           quotedValue={ quotedValue }
         />
