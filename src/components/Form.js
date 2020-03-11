@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import useCurrency from '../hooks/useCurrency';             // Hook Personalizado
 import useCriptoCurrency from '../hooks/useCriptoCurrency'; // Hook Personalizado
+
+import axios from 'axios';
 
 const
     Button = styled .button `
@@ -35,21 +37,29 @@ const Form = () => {
             { name: 'Dólar Canadiense', prefix: 'CAD' },
             { name: 'Euro', prefix: 'EUR' },
             { name: 'Libra Esterlina', prefix: 'GBP' }
-        ],
-        CRIPTO_CURRENCIES = [
-            { name: 'Bitcoin', prefix: 'BTC' },
-            { name: 'Ethereum', prefix: 'ETH' },
-            { name: 'Ripple', prefix: 'XRP' },
-            { name: 'Bitcoin Cash', prefix: 'BCH' },
-            { name: 'Litecoin', prefix: 'LTC' },
-            { name: 'Dash', prefix: 'DASH' },
-            { name: 'Cardano', prefix: 'ADA' }
         ];
 
-    /** Implementacion del Hooks personalizados */
+    /** Define State */
     const 
+        [ ApiData, setApiData ] = useState([]),
+        /** Implementacion del Hooks personalizados */
         [ currency, setCurrency, SelectCurrency ] = useCurrency( 'Elije tu moneda', '', CURRENCIES ),      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)
-        [ criptoCurrency, setCriptoCurrency, SelectCriptoCurrency ] = useCriptoCurrency( 'Elije tu criptomoneda', '', CRIPTO_CURRENCIES );      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)     
+        [ criptoCurrency, setCriptoCurrency, SelectCriptoCurrency ] = useCriptoCurrency( 'Elije tu criptomoneda', '', ApiData );      // Destructura State del Hook e Interfaz (Los Nombres con que se destructura pueden ser diferentes pero el orden importa al implementarlos)     
+
+    /** Hooks: Seguimiento */
+    useEffect( () => {
+        
+        /** Ejecutar llamado a la API */
+        const getDataApi = async () => {
+            const url = `https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD`,
+                  response = await axios .get( url );
+            
+            console .log( 'Data API', response );
+            setApiData( response .data .Data );     // Asigna datos de la API al State
+        }
+        getDataApi();
+
+    }, [] );
 
     return (
         <form>

@@ -23,6 +23,8 @@ const
 /** Hook */
 const useCriptoCurrency = ( label, initialState, options ) => {
 
+    console .log( 'options', options );
+
     /** Define State */
     const [ state, setState ] = useState( initialState );
 
@@ -37,9 +39,9 @@ const useCriptoCurrency = ( label, initialState, options ) => {
                 <option value="">Seleccione...</option>
                 { options .map( option => (     // Return implicito
                     <option 
-                        key={ option .prefix } 
-                        value={ option .prefix }
-                    >{ option .name }</option>
+                        key={ option .CoinInfo .Id } 
+                        value={ option .CoinInfo .Name }
+                    >{ option .CoinInfo .FullName }</option>
                 ))}
             </Select>
         </Fragment>
