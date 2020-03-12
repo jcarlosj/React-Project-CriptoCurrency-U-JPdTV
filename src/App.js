@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import Form from './components/Form';          
 import Quotation from './components/Quotation';
 import Spinner from './components/Spinner';
+import Default from './components/Default';
 
 /** Define Style Components */
 const 
@@ -46,7 +47,7 @@ function App() {
       criptoCurrency: ''
     }),
     [ quotedValue, setQuotedValue ] = useState({}),   // Valor cotizado a traves del API
-    [ loadSpinner, setLoadSpinner ] = useState( false );  // Controla Carga del Spinner
+    [ loadComponent, setLoadComponent ] = useState( '' );  // Controla Carga del Spinner
 
   /** Hook: Seguimiento a cambios */
   useEffect( () => {
@@ -63,10 +64,10 @@ function App() {
 
       console .log( 'quoteValue', response );
 
-      setLoadSpinner( true );        // Cambia el estado del State (Muestra el Spinner)
+      setLoadComponent( 'spinner' );        // Cambia el estado del State (Muestra el Spinner)
 
       setTimeout( () => {            // Temporizador para ocultar el Spinner
-        setLoadSpinner( false );     // Cambia el estado del State (Elimina el Spinner)
+        setLoadComponent( 'quotation' );     // Cambia el estado del State (Elimina el Spinner)
         setQuotedValue( response .data .DISPLAY[ dataForm .criptoCurrency ][ dataForm .currency ] );    // Asigna valor al State: Acceso Dinámico a el objeto de la API
       }, 3000 );                     // 3s
 
@@ -76,11 +77,13 @@ function App() {
   }, [ dataForm ] );
 
   /** Carga Condicional de Componentes */
-  const component = ( loadSpinner ) 
+  const component = ( loadComponent === 'spinner' ) 
                         ? <Spinner />
-                        : <Quotation 
-                            quotedValue={ quotedValue }
-                          />;
+                        : ( loadComponent === 'quotation' ) 
+                          ? <Quotation 
+                              quotedValue={ quotedValue }
+                            />
+                          : <Default />
 
   return (
     <Container>
