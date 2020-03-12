@@ -1,3 +1,9 @@
+# Quote cryptocurrency value
+
+Este proyecto consume la API https://www.cryptocompare.com/ a través de la cual podemos consultar el "Top Ten" actual de Criptomonedas y su valor actual en: Pesos (Colombianos, Mexicanos, Argentinos), Dólares (Americanos, Canadiences), Euro, Libra Esterlina y Bolivar Soberano al pulsar el botón del formulario.
+
+La funcionalidad se ddesarrolla haciendo uso de conceptos como Components (Carga Condicional), Props, State, Hook (useState, useEffect), Hooks Personalizados (para crear elementos select dinámicos) en React. (v.16.12.0). 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
