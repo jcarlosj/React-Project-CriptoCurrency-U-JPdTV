@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 /** Components */
 import Form from './components/Form';          
 import Quotation from './components/Quotation';
+import Spinner from './components/Spinner';
 
 /** Define Style Components */
 const 
@@ -44,7 +45,8 @@ function App() {
       currency: '',
       criptoCurrency: ''
     }),
-    [ quotedValue, setQuotedValue ] = useState({});   // Valor cotizado a traves del API
+    [ quotedValue, setQuotedValue ] = useState({}),   // Valor cotizado a traves del API
+    [ loadSpinner, setLoadSpinner ] = useState( false );  // Controla Carga del Spinner
 
   /** Hook: Seguimiento a cambios */
   useEffect( () => {
@@ -58,15 +60,27 @@ function App() {
       
       const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${ dataForm .criptoCurrency }&tsyms=${ dataForm .currency }`,
             response = await axios .get( url );
-      
+
       console .log( 'quoteValue', response );
-      setQuotedValue( response .data .DISPLAY[ dataForm .criptoCurrency ][ dataForm .currency ] );    // Asigna valor al State: Acceso Dinámico a el objeto de la API
+
+      setLoadSpinner( true );        // Cambia el estado del State (Muestra el Spinner)
+
+      setTimeout( () => {            // Temporizador para ocultar el Spinner
+        setLoadSpinner( false );     // Cambia el estado del State (Elimina el Spinner)
+        setQuotedValue( response .data .DISPLAY[ dataForm .criptoCurrency ][ dataForm .currency ] );    // Asigna valor al State: Acceso Dinámico a el objeto de la API
+      }, 3000 );                     // 3s
 
     }
     quoteCryptoCurrencyValue();
-
     
   }, [ dataForm ] );
+
+  /** Carga Condicional de Componentes */
+  const component = ( loadSpinner ) 
+                        ? <Spinner />
+                        : <Quotation 
+                            quotedValue={ quotedValue }
+                          />;
 
   return (
     <Container>
@@ -77,9 +91,7 @@ function App() {
         />
       </div>
       <div>
-        <Quotation 
-          quotedValue={ quotedValue }
-        />
+        { component }
       </div>
     </Container>
   );

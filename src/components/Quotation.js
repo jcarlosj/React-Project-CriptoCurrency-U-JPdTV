@@ -27,7 +27,7 @@ const
                 font-weight: bold;
             }
 
-            &:first-child {
+            &::first-of-type {
                 p {
                     color: red;
                 }
